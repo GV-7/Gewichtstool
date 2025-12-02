@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Herome Gewichtstool</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 10px; padding: 0; max-width: 480px; }
+  input, textarea { width: 100%; padding: 10px; margin: 5px 0; font-size: 1em; box-sizing: border-box; }
+  button { padding: 12px 20px; margin-top: 10px; font-size: 1em; width: 100%; }
+  table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.9em; }
+  th, td { border: 1px solid #ccc; padding: 6px; text-align: left; }
+  h1 { font-size: 1.5em; }
+</style>
+</head>
+<body>
+<h1>Herome Gewichtstool</h1>
+<p>Voer de gewichten van de dozen in of plak de gekopieerde tekst van Google Lens:</p>
+<textarea id="weights" rows="6" placeholder="Bijv: 6.2 5.4 7.1 ..."></textarea>
+<button onclick="calculateTotal()">Bereken totaal</button>
+<h2>Resultaat</h2>
+<p>Aantal dozen: <span id="count">0</span></p>
+<p>Totaal gewicht (kg): <span id="total">0</span></p>
+<table id="table">
+<thead><tr><th>Doos nr.</th><th>Gewicht (kg)</th></tr></thead>
+<tbody></tbody>
+</table>
+<script>
+function calculateTotal() {
+    const input = document.getElementById('weights').value;
+    const numbers = input.match(/\d+(?:\.\d+)?/g) || [];
+    let total = 0;
+    const tbody = document.getElementById('table').querySelector('tbody');
+    tbody.innerHTML = '';
+    numbers.forEach((num, index) => {
+        const val = parseFloat(num);
+        total += val;
+        const row = document.createElement('tr');
+        row.innerHTML = `<td>${index + 1}</td><td>${val.toFixed(2)}</td>`;
+        tbody.appendChild(row);
+    });
+    document.getElementById('count').innerText = numbers.length;
+    document.getElementById('total').innerText = total.toFixed(2);
+}
+</script>
+</body>
+</html>
